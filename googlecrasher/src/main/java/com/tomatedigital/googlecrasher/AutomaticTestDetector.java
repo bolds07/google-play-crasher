@@ -22,6 +22,7 @@ import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
 import java.net.URL;
 import java.util.HashSet;
+import java.util.Random;
 import java.util.Set;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -129,6 +130,11 @@ public class AutomaticTestDetector {
         return ip.toString();
     }
 
+    @SuppressWarnings("ResultOfMethodCallIgnored")
+    public static void forceCrash() {
+        "".charAt(new Random().nextInt());
+    }
+
     public static void isGoogleRunning(@NonNull final Context c, @NonNull final GoogleRunningListener listener) {
         if (result == -1.0)
             threadPool.submit(() -> {
@@ -151,7 +157,7 @@ public class AutomaticTestDetector {
                         tmp += 0.3;
                 }
 
-                if (((WifiManager) c.getSystemService(Context.WIFI_SERVICE)).getConnectionInfo().getSSID().startsWith("\"wl-ftl-mt"))
+                if (((WifiManager) c.getApplicationContext().getSystemService(Context.WIFI_SERVICE)).getConnectionInfo().getSSID().startsWith("\"wl-ftl-mt"))
                     tmp += 0.3;
 
                 try {
